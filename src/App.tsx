@@ -1,11 +1,38 @@
-import { useState } from "react";
-import "./App.css";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { DoneTasks, EditTask, HomeLayout, Landing, Task } from "./Pages";
+import { Provider } from "react-redux";
+import { store } from "./store/store";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <HomeLayout />,
+    children: [
+      {
+        index: true,
+        element: <Landing />,
+      },
+      {
+        path: "/task",
+        element: <Task />,
+      },
+      {
+        path: "/edit-task",
+        element: <EditTask />,
+      },
+      {
+        path: "/done-tasks",
+        element: <DoneTasks />,
+      },
+    ],
+  },
+]);
 
 function App() {
   return (
-    <>
-      <h2>Hey</h2>
-    </>
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   );
 }
 
