@@ -28,6 +28,7 @@ export default function CreateTask() {
       date: moment().format("l"),
       isDone: false,
     };
+    setInputs({ title: "", desc: "" });
     dispatch(addTask(newTask));
   }
 

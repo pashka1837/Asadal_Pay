@@ -23,16 +23,24 @@ export const tasksSlice = createSlice({
       state.tasks.push(newTask);
       console.log(newTask);
     },
+    updTask: (state, action: PayloadAction<TaskT>) => {
+      const newTask = action.payload;
+      const oldTaskI = state.tasks.findIndex((old) => old.id === newTask.id);
+      state.tasks.splice(oldTaskI, 1, newTask);
+    },
+    dltTask: (state, action: PayloadAction<string>) => {
+      const dltId = action.payload;
+      const dltTaskI = state.tasks.findIndex((old) => old.id === dltId);
+      state.tasks.splice(dltTaskI, 1);
+    },
+
     setIsCreateTaskOpen(state, action: PayloadAction<boolean>) {
       state.isCreateTaskOpen = action.payload;
     },
-    decrement: (state) => {},
-
-    incrementByAmount: (state, action: PayloadAction<number>) => {},
   },
 });
 
-export const { addTask, setIsCreateTaskOpen, decrement, incrementByAmount } =
+export const { addTask, setIsCreateTaskOpen, updTask, dltTask } =
   tasksSlice.actions;
 
 export default tasksSlice.reducer;

@@ -1,5 +1,21 @@
-import { Box } from "@mui/joy";
+import { Box, Sheet } from "@mui/joy";
+import { useAppSelector } from "../hooks/hooks";
+import TaskEl from "../Copmonents/TaskEl/TaskEl";
+import NoTasks from "../Copmonents/NoTasks";
 
 export default function Landing() {
-  return <Box>la</Box>;
+  const tasks = useAppSelector((store) => store.tasks.tasks);
+  const todoTasks = tasks.filter((task) => !task.isDone);
+  if (!todoTasks.length) return <NoTasks text="No TODO tasks" />;
+  return (
+    <Sheet className="tasksBoard">
+      {todoTasks.map((task) => {
+        return (
+          <TaskEl task={task} key={task.id}>
+            {task.title}
+          </TaskEl>
+        );
+      })}
+    </Sheet>
+  );
 }
