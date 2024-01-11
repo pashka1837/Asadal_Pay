@@ -3,8 +3,10 @@ import { ModalBG, ModifyTask } from "../Copmonents";
 import { useState } from "react";
 import { useAppDispatch } from "../hooks/hooks";
 import { updTask } from "../features/tasksSlice/tasksSlice";
+import { useUpdTaskMutation } from "../services/tasksApi";
 
 export default function EditTask() {
+  const [updTask] = useUpdTaskMutation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -30,7 +32,8 @@ export default function EditTask() {
       title: inputs.title,
       desc: inputs.desc,
     };
-    dispatch(updTask(newTask));
+    // dispatch(updTask(newTask));
+    updTask(newTask);
     navigate(`${homePath}`);
   };
 

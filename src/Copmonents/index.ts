@@ -9,3 +9,4 @@ export { default as SingleTask } from "./SingleTask";
 export { default as TaskEl } from "./TaskEl";
 
 export { default as CreateTask } from "./CreateTask/CreateTask";
+export { default as Loader } from "./Loader";

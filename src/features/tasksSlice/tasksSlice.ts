@@ -5,18 +5,26 @@ interface CounterState {
   tasks: TaskT[];
   isCreateTaskOpen: boolean;
   isDoneTasksOpen: boolean;
+  isLoading: boolean;
 }
 
 const initialState: CounterState = {
   tasks: [],
   isCreateTaskOpen: false,
   isDoneTasksOpen: false,
+  isLoading: false,
 };
 
 export const tasksSlice = createSlice({
   name: "tasks",
   initialState,
   reducers: {
+    setIsLoading: (state, action: PayloadAction<boolean>) => {
+      state.isLoading = action.payload;
+    },
+    setTasks: (state, action: PayloadAction<TaskT[]>) => {
+      state.tasks = action.payload;
+    },
     addTask: (state, action: PayloadAction<TaskT>) => {
       const newTask = action.payload;
       state.tasks.push(newTask);
@@ -42,6 +50,8 @@ export const tasksSlice = createSlice({
 });
 
 export const {
+  setIsLoading,
+  setTasks,
   addTask,
   updTask,
   dltTask,

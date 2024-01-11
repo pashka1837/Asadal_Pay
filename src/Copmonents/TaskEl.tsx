@@ -5,8 +5,15 @@ import { useAppDispatch } from "../hooks/hooks";
 import { dltTask, updTask } from "../features/tasksSlice/tasksSlice";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useRef } from "react";
+import {
+  useDeleteTaskMutation,
+  useUpdTaskMutation,
+} from "../services/tasksApi";
 
 export default function TaskEl({ task }: { task: TaskT }) {
+  const [deleteTask] = useDeleteTaskMutation();
+  const [updTask] = useUpdTaskMutation();
+
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -19,12 +26,14 @@ export default function TaskEl({ task }: { task: TaskT }) {
   const color = task.isDone ? "success" : "primary";
 
   function handleDoneTask() {
-    dispatch(updTask({ ...task, isDone: !isDone }));
+    updTask({ ...task, isDone: !isDone });
+    // dispatch(updTask({ ...task, isDone: !isDone }));
   }
 
   const handleDeleteTask: handleClicksT = (e) => {
     e.stopPropagation();
-    dispatch(dltTask(id));
+    deleteTask(id);
+    // dispatch(dltTask(id));
   };
 
   const handleEditTask: handleClicksT = (e) => {

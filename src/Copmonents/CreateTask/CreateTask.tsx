@@ -1,14 +1,15 @@
-
 import { useAppDispatch } from "../../hooks/hooks";
 import { addTask } from "../../features/tasksSlice/tasksSlice";
 import { nanoid } from "nanoid";
 import moment from "moment";
 import { useState } from "react";
 import ModifyTask from "./ModifyTask";
+import { usePostTasksMutation } from "../../services/tasksApi";
 
 export default function CreateTask() {
   const [inputs, setInputs] = useState<InputsStateT>({ title: "", desc: "" });
   const dispatch = useAppDispatch();
+  const [postTasks] = usePostTasksMutation();
 
   const handleInpChange: handleInpChangeT = (e, name) => {
     const inp = e.target;
@@ -26,7 +27,8 @@ export default function CreateTask() {
       isDone: false,
     };
     setInputs({ title: "", desc: "" });
-    dispatch(addTask(newTask));
+    postTasks(newTask);
+    // dispatch(addTask(newTask));
   }
 
   const componValues = {
