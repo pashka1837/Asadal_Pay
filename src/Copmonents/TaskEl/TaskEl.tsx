@@ -4,29 +4,47 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useAppDispatch } from "../../hooks/hooks";
 import { dltTask, updTask } from "../../features/tasksSlice/tasksSlice";
 import { useNavigate } from "react-router-dom";
+import { useRef } from "react";
 
 export default function TaskEl({ task }: { task: TaskT }) {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const checkBoxRef = useRef<HTMLSpanElement>(null);
   const { id, date, title, isDone } = task;
 
-  function handleDoneTask() {
+  function handleDoneTask(e: React.ChangeEvent<HTMLInputElement>) {
     dispatch(updTask({ ...task, isDone: true }));
   }
 
-  function handleDeleteTask() {
+  function handleDeleteTask(e: React.MouseEvent<HTMLButtonElement>) {
+    e.stopPropagation();
     dispatch(dltTask(id));
   }
 
-  function handleEditTask() {
+  function handleEditTask(e: React.MouseEvent<HTMLButtonElement>) {
+    e.stopPropagation();
     navigate("edit-task", { state: task });
+  }
+
+  function handleOpenTask(e: React.MouseEvent<HTMLDivElement>) {
+    e.stopPropagation();
+    const cheBoxEl =
+      checkBoxRef.current!.firstElementChild!.firstElementChild!
+        .firstElementChild;
+    if (e.target === cheBoxEl) return;
+    navigate("task", { state: task });
   }
 
   return (
     <Sheet
-      color="primary"
+      onClick={handleOpenTask}
+      color={task.isDone ? "success" : "primary"}
       variant="outlined"
-      sx={{ borderRadius: "5px", width: "300px", cursor: "pointer" }}
+      style={{
+        borderRadius: "5px",
+        width: "300px",
+        cursor: "pointer",
+      }}
     >
       <Stack spacing={2} p={2}>
         <Stack
@@ -53,7 +71,12 @@ export default function TaskEl({ task }: { task: TaskT }) {
             </Button>
           </Stack>
         </Stack>
-        <Checkbox onChange={handleDoneTask} label="Done" />
+        <Checkbox
+          ref={checkBoxRef}
+          defaultChecked={isDone}
+          onChange={handleDoneTask}
+          label="Done"
+        />
         <Typography sx={{ wordBreak: "break-word" }} level="title-lg">
           {title}
         </Typography>

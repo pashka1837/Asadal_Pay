@@ -21,7 +21,6 @@ export const tasksSlice = createSlice({
     addTask: (state, action: PayloadAction<TaskT>) => {
       const newTask = action.payload;
       state.tasks.push(newTask);
-      console.log(newTask);
     },
     updTask: (state, action: PayloadAction<TaskT>) => {
       const newTask = action.payload;

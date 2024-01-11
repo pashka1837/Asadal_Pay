@@ -15,7 +15,6 @@ export default function CreateTask() {
 
   const handleInpChange: handleInpChangeT = (e, name) => {
     const inp = e.target;
-    console.log(inp.value);
     setInputs({ ...inputs, [`${name}`]: inp.value });
   };
 
@@ -26,7 +25,7 @@ export default function CreateTask() {
     const newTask: TaskT = {
       ...inputs,
       id: nanoid(),
-      date: moment().format("l"),
+      date: moment().format("DD/MM/YYYY"),
       isDone: false,
     };
     setInputs({ title: "", desc: "" });

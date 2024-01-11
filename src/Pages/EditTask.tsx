@@ -18,7 +18,7 @@ export default function EditTask() {
 
   const handleInpChange: handleInpChangeT = (e, name) => {
     const inp = e.target;
-    console.log(inp.value);
+    // console.log(inp.value);
     setInputs({ ...inputs, [`${name}`]: inp.value });
   };
 
@@ -33,7 +33,7 @@ export default function EditTask() {
     navigate("/");
   };
 
-  console.log(task);
+  // console.log(task);
 
   const componValues = {
     plcHldrTitle: "",

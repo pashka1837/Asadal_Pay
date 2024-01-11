@@ -18,7 +18,7 @@ type handleInpChangeT = (
 
 type handleInpSubmitT = (e: React.FormEvent<HTMLFormElement>) => void;
 
-type MyInputT = {
+type MyInputPropsT = {
   defaultValue: string;
   label: string;
   name: string;

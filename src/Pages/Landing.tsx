@@ -1,4 +1,4 @@
-import { Box, Sheet } from "@mui/joy";
+import { Sheet } from "@mui/joy";
 import { useAppSelector } from "../hooks/hooks";
 import TaskEl from "../Copmonents/TaskEl/TaskEl";
 import NoTasks from "../Copmonents/NoTasks";
@@ -10,11 +10,7 @@ export default function Landing() {
   return (
     <Sheet className="tasksBoard">
       {todoTasks.map((task) => {
-        return (
-          <TaskEl task={task} key={task.id}>
-            {task.title}
-          </TaskEl>
-        );
+        return <TaskEl key={task.id} task={task} />;
       })}
     </Sheet>
   );

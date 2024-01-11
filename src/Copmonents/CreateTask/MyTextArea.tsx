@@ -6,7 +6,7 @@ export default function MyInput({
   placeholder,
   defaultValue,
   handleInpChange,
-}: MyInputT) {
+}: MyInputPropsT) {
   return (
     <FormControl>
       <FormLabel>{label}</FormLabel>
