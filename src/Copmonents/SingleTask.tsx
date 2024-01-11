@@ -1,17 +1,20 @@
 import { Button, Sheet, Stack, Typography } from "@mui/joy";
 import CloseIcon from "@mui/icons-material/Close";
-
-import moment from "moment";
 import { useNavigate } from "react-router-dom";
 
-export default function SingleTask({ task }: { task: TaskT }) {
-  // let when = moment(task.date, "DD/MM/YYYY").fromNow();
-  // when = when.includes(`hours`) ? "today" : when;
-  const color = task.isDone ? "success" : "primary";
+export default function SingleTask({
+  homePath,
+  task,
+}: {
+  task: TaskT;
+  homePath: string;
+}) {
   const navigate = useNavigate();
 
+  const color = task.isDone ? "success" : "primary";
+
   function handleClose() {
-    navigate(`/`);
+    navigate(`${homePath}`);
   }
   return (
     <Sheet

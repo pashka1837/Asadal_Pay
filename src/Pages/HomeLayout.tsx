@@ -1,11 +1,14 @@
-import { Box, Button, Sheet } from "@mui/joy";
 import { Outlet } from "react-router-dom";
-import CreateTask from "../Copmonents/CreateTask/CreateTask";
+import { CreateTask, NavBar } from "../Copmonents";
+import { useAppSelector } from "../hooks/hooks";
 
 export default function HomeLayout() {
+  const { isCreateTaskOpen } = useAppSelector((store) => store.tasks);
+
   return (
     <main className="homeLayout">
-      <CreateTask />
+      <NavBar />
+      {isCreateTaskOpen && <CreateTask />}
       <Outlet />
     </main>
   );

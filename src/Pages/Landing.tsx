@@ -1,7 +1,6 @@
 import { Sheet } from "@mui/joy";
 import { useAppSelector } from "../hooks/hooks";
-import TaskEl from "../Copmonents/TaskEl/TaskEl";
-import NoTasks from "../Copmonents/NoTasks";
+import { TaskEl, NoTasks } from "../Copmonents";
 
 export default function Landing() {
   const tasks = useAppSelector((store) => store.tasks.tasks);

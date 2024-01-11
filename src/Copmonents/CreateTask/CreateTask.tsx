@@ -1,13 +1,10 @@
-import { Button, Sheet, Stack } from "@mui/joy";
-import { Form } from "react-router-dom";
-import MyInput from "./MyInput";
-import MyTextArea from "./MyTextArea";
+
 import { useAppDispatch } from "../../hooks/hooks";
 import { addTask } from "../../features/tasksSlice/tasksSlice";
 import { nanoid } from "nanoid";
 import moment from "moment";
 import { useState } from "react";
-import ModifyTask from "../ModifyTask";
+import ModifyTask from "./ModifyTask";
 
 export default function CreateTask() {
   const [inputs, setInputs] = useState<InputsStateT>({ title: "", desc: "" });

@@ -1,39 +1,45 @@
 import { Button, Checkbox, Sheet, Stack, Typography } from "@mui/joy";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import CloseIcon from "@mui/icons-material/Close";
-import { useAppDispatch } from "../../hooks/hooks";
-import { dltTask, updTask } from "../../features/tasksSlice/tasksSlice";
-import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../hooks/hooks";
+import { dltTask, updTask } from "../features/tasksSlice/tasksSlice";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useRef } from "react";
 
 export default function TaskEl({ task }: { task: TaskT }) {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const checkBoxRef = useRef<HTMLSpanElement>(null);
+
+  const { pathname } = location;
+
   const { id, date, title, isDone } = task;
 
-  function handleDoneTask(e: React.ChangeEvent<HTMLInputElement>) {
-    dispatch(updTask({ ...task, isDone: true }));
+  const color = task.isDone ? "success" : "primary";
+
+  function handleDoneTask() {
+    dispatch(updTask({ ...task, isDone: !isDone }));
   }
 
-  function handleDeleteTask(e: React.MouseEvent<HTMLButtonElement>) {
+  const handleDeleteTask: handleClicksT = (e) => {
     e.stopPropagation();
     dispatch(dltTask(id));
-  }
+  };
 
-  function handleEditTask(e: React.MouseEvent<HTMLButtonElement>) {
+  const handleEditTask: handleClicksT = (e) => {
     e.stopPropagation();
-    navigate("edit-task", { state: task });
-  }
+    navigate("edit-task", { state: { task, pathname } });
+  };
 
-  function handleOpenTask(e: React.MouseEvent<HTMLDivElement>) {
+  const handleOpenTask: handleClicksT = (e) => {
     e.stopPropagation();
     const cheBoxEl =
       checkBoxRef.current!.firstElementChild!.firstElementChild!
         .firstElementChild;
     if (e.target === cheBoxEl) return;
-    navigate("task", { state: task });
-  }
+    navigate("task", { state: { task, pathname } });
+  };
 
   return (
     <Sheet
@@ -56,6 +62,7 @@ export default function TaskEl({ task }: { task: TaskT }) {
           <Typography level="body-md">{date}</Typography>
           <Stack direction="row" spacing={1}>
             <Button
+              color={color}
               onClick={handleEditTask}
               variant="plain"
               className="taskElBtn"
@@ -63,6 +70,7 @@ export default function TaskEl({ task }: { task: TaskT }) {
               <MoreVertIcon />
             </Button>
             <Button
+              color={color}
               onClick={handleDeleteTask}
               variant="plain"
               className="taskElBtn"
@@ -82,6 +90,7 @@ export default function TaskEl({ task }: { task: TaskT }) {
           defaultChecked={isDone}
           onChange={handleDoneTask}
           label="Done"
+          color={color}
           sx={{ width: "70px" }}
         />
       </Stack>

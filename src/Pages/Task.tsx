@@ -1,13 +1,13 @@
 import { useLocation } from "react-router-dom";
-import ModalBG from "../Copmonents/ModalBG";
-import SingleTask from "../Copmonents/SingleTask";
+import { ModalBG, SingleTask } from "../Copmonents";
 
 export default function Task() {
   const location = useLocation();
-  const task = location.state as TaskT;
+  const task = location.state.task as TaskT;
+  const homePath = location.state.pathname as string;
   return (
-    <ModalBG>
-      <SingleTask task={task} />
+    <ModalBG homePath={homePath}>
+      <SingleTask task={task} homePath={homePath} />
     </ModalBG>
   );
 }

@@ -1,7 +1,7 @@
 import { Button, Sheet, Stack } from "@mui/joy";
 import { Form } from "react-router-dom";
-import MyInput from "./CreateTask/MyInput";
-import MyTextArea from "./CreateTask/MyTextArea";
+import MyInput from "./MyInput";
+import MyTextArea from "./MyTextArea";
 
 export default function ModifyTask({
   handleSubmit,

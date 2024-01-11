@@ -23,6 +23,16 @@ const router = createBrowserRouter([
       {
         path: "/done-tasks",
         element: <DoneTasks />,
+        children: [
+          {
+            path: "/done-tasks/task",
+            element: <Task />,
+          },
+          {
+            path: "/done-tasks/edit-task",
+            element: <EditTask />,
+          },
+        ],
       },
     ],
   },

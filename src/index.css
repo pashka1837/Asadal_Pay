@@ -16,6 +16,15 @@
   padding: 2%;
 }
 
+.navbar {
+  width: 100%;
+  height: 10vh;
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+  justify-content: space-around;
+}
+
 .tasksBoard {
   padding: 3% 6%;
   width: 100%;
@@ -27,6 +36,7 @@
 }
 
 .noTasks {
+  margin-top: -8px;
   width: 100%;
   height: 500px;
   border-radius: 10px;

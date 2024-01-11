@@ -1,6 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import ModalBG from "../Copmonents/ModalBG";
-import ModifyTask from "../Copmonents/ModifyTask";
+import { ModalBG, ModifyTask } from "../Copmonents";
 import { useState } from "react";
 import { useAppDispatch } from "../hooks/hooks";
 import { updTask } from "../features/tasksSlice/tasksSlice";
@@ -9,7 +8,10 @@ export default function EditTask() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const task = location.state as TaskT;
+
+  const task = location.state.task as TaskT;
+
+  const homePath = location.state.pathname as string;
 
   const [inputs, setInputs] = useState<InputsStateT>({
     title: task.title,
@@ -18,7 +20,6 @@ export default function EditTask() {
 
   const handleInpChange: handleInpChangeT = (e, name) => {
     const inp = e.target;
-    // console.log(inp.value);
     setInputs({ ...inputs, [`${name}`]: inp.value });
   };
 
@@ -30,10 +31,8 @@ export default function EditTask() {
       desc: inputs.desc,
     };
     dispatch(updTask(newTask));
-    navigate("/");
+    navigate(`${homePath}`);
   };
-
-  // console.log(task);
 
   const componValues = {
     plcHldrTitle: "",
@@ -44,7 +43,7 @@ export default function EditTask() {
   };
 
   return (
-    <ModalBG>
+    <ModalBG homePath={homePath}>
       <ModifyTask
         componValues={componValues}
         inputs={inputs}

@@ -1,17 +1,19 @@
-import { useNavigate, useSubmit } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-export default function ModalBG({ children }) {
-  const submit = useSubmit();
+export default function ModalBG({
+  children,
+  homePath,
+}: {
+  homePath: string;
+  children: JSX.Element | JSX.Element[];
+}) {
   const navigate = useNavigate();
 
-  function handleClickOutside(e) {
+  const handleClickOutside: handleClicksT = (e) => {
     if (e.currentTarget === e.target) {
-      //   if (formRef) {
-      //     submit(formRef.current, { method: 'post' });
-      //   }
-      navigate("/");
+      navigate(`${homePath}`);
     }
-  }
+  };
   return (
     <div className="modalBG" onClick={handleClickOutside}>
       {children}

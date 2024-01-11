@@ -41,4 +41,8 @@ type ModifyTaskPropsT = {
   handleSubmit: handleInpSubmitT;
 };
 
+type handleClicksT = (
+  e: React.MouseEvent<HTMLButtonElement | HTMLDivElement>
+) => void;
+
 // export { TaskT, MyInputT, InputsStateT, handleInpChangeT };
