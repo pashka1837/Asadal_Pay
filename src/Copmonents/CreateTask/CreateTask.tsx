@@ -7,6 +7,7 @@ import { addTask } from "../../features/tasksSlice/tasksSlice";
 import { nanoid } from "nanoid";
 import moment from "moment";
 import { useState } from "react";
+import ModifyTask from "../ModifyTask";
 
 export default function CreateTask() {
   const [inputs, setInputs] = useState<InputsStateT>({ title: "", desc: "" });
@@ -32,30 +33,20 @@ export default function CreateTask() {
     dispatch(addTask(newTask));
   }
 
+  const componValues = {
+    plcHldrTitle: "Enter title of task",
+    plcHldrDesc: "Enter description of task",
+    btnName: "Create Task",
+    dfltTitle: "",
+    dfltDesc: "",
+  };
+
   return (
-    <Sheet sx={{ p: 4, width: "350px" }}>
-      <Form onSubmit={handleSubmit}>
-        <Stack spacing={2}>
-          <MyInput
-            label="Title"
-            name="title"
-            placeholder="Enter title of task"
-            handleInpChange={handleInpChange}
-          />
-          <MyTextArea
-            label="Description"
-            name="desc"
-            placeholder="Enter description of task"
-            handleInpChange={handleInpChange}
-          />
-          <Button
-            disabled={!inputs.desc || !inputs.title ? true : false}
-            type="submit"
-          >
-            Create Task
-          </Button>
-        </Stack>
-      </Form>
-    </Sheet>
+    <ModifyTask
+      componValues={componValues}
+      inputs={inputs}
+      handleInpChange={handleInpChange}
+      handleSubmit={handleSubmit}
+    />
   );
 }

@@ -4,6 +4,7 @@ export default function MyInput({
   label,
   name,
   placeholder,
+  defaultValue,
   handleInpChange,
 }: MyInputT) {
   return (
@@ -13,6 +14,7 @@ export default function MyInput({
         onChange={(e) => handleInpChange(e, name)}
         name={name}
         placeholder={placeholder}
+        defaultValue={defaultValue}
         type="text"
       />
     </FormControl>

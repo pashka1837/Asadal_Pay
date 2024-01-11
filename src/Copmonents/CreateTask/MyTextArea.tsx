@@ -4,6 +4,7 @@ export default function MyInput({
   label,
   name,
   placeholder,
+  defaultValue,
   handleInpChange,
 }: MyInputT) {
   return (
@@ -12,6 +13,7 @@ export default function MyInput({
       <Textarea
         onChange={(e) => handleInpChange(e, name)}
         name={name}
+        defaultValue={defaultValue}
         placeholder={placeholder}
       />
     </FormControl>

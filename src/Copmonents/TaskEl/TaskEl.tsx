@@ -19,7 +19,7 @@ export default function TaskEl({ task }: { task: TaskT }) {
   }
 
   function handleEditTask() {
-    navigate("edit-task");
+    navigate("edit-task", { state: task });
   }
 
   return (
