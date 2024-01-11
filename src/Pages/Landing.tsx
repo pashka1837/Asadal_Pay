@@ -1,3 +1,5 @@
+import { Box } from "@mui/joy";
+
 export default function Landing() {
-  return <div>Landing</div>;
+  return <Box>la</Box>;
 }

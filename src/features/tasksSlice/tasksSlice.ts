@@ -2,33 +2,37 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../../store/store";
 
-// Define a type for the slice state
 interface CounterState {
-  value: number;
+  tasks: TaskT[];
+  curTask: string | null;
+  isCreateTaskOpen: boolean;
 }
 
-// Define the initial state using that type
 const initialState: CounterState = {
-  value: 0,
+  tasks: [],
+  curTask: null,
+  isCreateTaskOpen: false,
 };
 
 export const tasksSlice = createSlice({
   name: "tasks",
   initialState,
   reducers: {
-    increment: (state) => {
-      state.value += 1;
+    addTask: (state, action: PayloadAction<TaskT>) => {
+      const newTask = action.payload;
+      state.tasks.push(newTask);
+      console.log(newTask);
     },
-    decrement: (state) => {
-      state.value -= 1;
+    setIsCreateTaskOpen(state, action: PayloadAction<boolean>) {
+      state.isCreateTaskOpen = action.payload;
     },
-    // Use the PayloadAction type to declare the contents of `action.payload`
-    incrementByAmount: (state, action: PayloadAction<number>) => {
-      state.value += action.payload;
-    },
+    decrement: (state) => {},
+
+    incrementByAmount: (state, action: PayloadAction<number>) => {},
   },
 });
 
-export const { increment, decrement, incrementByAmount } = tasksSlice.actions;
+export const { addTask, setIsCreateTaskOpen, decrement, incrementByAmount } =
+  tasksSlice.actions;
 
 export default tasksSlice.reducer;
