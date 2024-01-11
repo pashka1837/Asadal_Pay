@@ -42,7 +42,7 @@ export default function TaskEl({ task }: { task: TaskT }) {
       variant="outlined"
       style={{
         borderRadius: "5px",
-        width: "300px",
+        width: "250px",
         cursor: "pointer",
       }}
     >
@@ -71,15 +71,19 @@ export default function TaskEl({ task }: { task: TaskT }) {
             </Button>
           </Stack>
         </Stack>
+        <Typography
+          sx={{ wordBreak: "break-word", pr: "10px" }}
+          level="title-lg"
+        >
+          {title}
+        </Typography>
         <Checkbox
           ref={checkBoxRef}
           defaultChecked={isDone}
           onChange={handleDoneTask}
           label="Done"
+          sx={{ width: "70px" }}
         />
-        <Typography sx={{ wordBreak: "break-word" }} level="title-lg">
-          {title}
-        </Typography>
       </Stack>
     </Sheet>
   );
