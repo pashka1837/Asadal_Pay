@@ -1,10 +1,4 @@
-import {
-  SkipToken,
-  createApi,
-  fetchBaseQuery,
-} from "@reduxjs/toolkit/query/react";
-import { setIsLoading, setTasks } from "../features/tasksSlice/tasksSlice";
-
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const tasksApi = createApi({
   reducerPath: "tasksApi",
   baseQuery: fetchBaseQuery({ baseUrl: "/" }),
@@ -14,10 +8,13 @@ export const tasksApi = createApi({
       query: () => ({
         url: `api/tasks`,
       }),
-      providesTags: ["Tasks"],
-      transformResponse: (response: TaskT[]) => {
-        return response;
-      },
+      providesTags: (result, error, arg) =>
+        result
+          ? [
+              ...result.map((task) => ({ type: "Task" as const, id: task.id })),
+              "Task",
+            ]
+          : ["Task"],
     }),
     postTasks: builder.mutation<TaskT, TaskT>({
       query: (task) => ({
@@ -25,38 +22,34 @@ export const tasksApi = createApi({
         method: "POST",
         body: task,
       }),
-      invalidatesTags: ["Tasks"],
+      invalidatesTags: (result, error, arg) => [
+        { type: "Task" as const, id: arg.id },
+      ],
       async onQueryStarted(task, { dispatch, queryFulfilled }) {
         const patchResult = dispatch(
           tasksApi.util.updateQueryData("getTasks", undefined, (draft) => {
             draft.push(task);
           })
         );
-        try {
-          await queryFulfilled;
-        } catch (e) {
-          patchResult.undo();
-        }
+        queryFulfilled.catch(patchResult.undo);
       },
     }),
-    deleteTask: builder.mutation<string, string | void>({
+    deleteTask: builder.mutation<string, string>({
       query: (taskID) => ({
         url: `api/tasks`,
         method: "DELETE",
         body: taskID,
       }),
-      invalidatesTags: ["Tasks"],
+      invalidatesTags: (result, error, arg) => [
+        { type: "Task" as const, id: arg },
+      ],
       async onQueryStarted(taskID, { dispatch, queryFulfilled }) {
         const patchResult = dispatch(
           tasksApi.util.updateQueryData("getTasks", undefined, (draft) => {
             return draft.filter((task) => task.id !== taskID);
           })
         );
-        try {
-          await queryFulfilled;
-        } catch (e) {
-          patchResult.undo();
-        }
+        queryFulfilled.catch(patchResult.undo);
       },
     }),
     updTask: builder.mutation<string, TaskT>({
@@ -65,20 +58,19 @@ export const tasksApi = createApi({
         method: "PATCH",
         body: task,
       }),
-      invalidatesTags: ["Tasks"],
+      invalidatesTags: (result, error, arg) => [
+        { type: "Task" as const, id: arg.id },
+      ],
       async onQueryStarted(task, { dispatch, queryFulfilled }) {
         const patchResult = dispatch(
           tasksApi.util.updateQueryData("getTasks", undefined, (draft) => {
-            const newAr = draft.filter((oldTask) => oldTask.id !== task.id);
-            newAr.push(task);
-            return newAr;
+            const oldTaskIndex = draft.findIndex(
+              (oldTask) => oldTask.id === task.id
+            );
+            draft.splice(oldTaskIndex, 1, task);
           })
         );
-        try {
-          await queryFulfilled;
-        } catch (e) {
-          patchResult.undo();
-        }
+        queryFulfilled.catch(patchResult.undo);
       },
     }),
   }),

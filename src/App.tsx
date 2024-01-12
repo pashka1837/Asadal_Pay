@@ -20,19 +20,19 @@ const router = createBrowserRouter([
         path: "/edit-task",
         element: <EditTask />,
       },
+    ],
+  },
+  {
+    path: "/done-tasks",
+    element: <DoneTasks />,
+    children: [
       {
-        path: "/done-tasks",
-        element: <DoneTasks />,
-        children: [
-          {
-            path: "/done-tasks/task",
-            element: <Task />,
-          },
-          {
-            path: "/done-tasks/edit-task",
-            element: <EditTask />,
-          },
-        ],
+        path: "/done-tasks/task",
+        element: <Task />,
+      },
+      {
+        path: "/done-tasks/edit-task",
+        element: <EditTask />,
       },
     ],
   },

@@ -1,8 +1,6 @@
 import { Outlet } from "react-router-dom";
 import { CreateTask, Loader, NavBar } from "../Copmonents";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
-import { useGetTasksQuery } from "../services/tasksApi";
-import { setTasks } from "../features/tasksSlice/tasksSlice";
 
 export default function HomeLayout() {
   const { isCreateTaskOpen } = useAppSelector((store) => store.tasks);
