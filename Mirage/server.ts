@@ -13,7 +13,6 @@ export default function makeServer() {
       this.get(
         "/tasks",
         (schema, request) => {
-          console.log(request);
           const data = schema.db.tasks;
           return data;
         },

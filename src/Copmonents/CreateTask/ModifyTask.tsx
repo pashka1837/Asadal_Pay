@@ -1,7 +1,8 @@
-import { Button, Sheet, Stack } from "@mui/joy";
-import { Form } from "react-router-dom";
+import { Button, Sheet, Stack, Typography } from "@mui/joy";
+import { Form, useLocation, useNavigate } from "react-router-dom";
 import MyInput from "./MyInput";
 import MyTextArea from "./MyTextArea";
+import CloseIcon from "@mui/icons-material/Close";
 
 export default function ModifyTask({
   handleSubmit,
@@ -9,10 +10,22 @@ export default function ModifyTask({
   inputs,
   componValues,
 }: ModifyTaskPropsT) {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { pathname } = location;
+  const homePath = pathname.replace("edit-task", "");
   const { plcHldrTitle, plcHldrDesc, dfltTitle, dfltDesc, btnName } =
     componValues;
   return (
-    <Sheet sx={{ p: 4, width: "350px" }}>
+    <Sheet sx={{ p: 4, width: "350px", borderRadius: "10px" }}>
+      {pathname.length > 2 && (
+        <Stack direction="row" justifyContent="space-between">
+          <Typography level="title-lg">Change Task</Typography>
+          <Button onClick={() => navigate(`${homePath}`)} variant="plain">
+            <CloseIcon />
+          </Button>
+        </Stack>
+      )}
       <Form onSubmit={handleSubmit}>
         <Stack spacing={2}>
           <MyInput

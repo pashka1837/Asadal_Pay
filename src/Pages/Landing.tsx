@@ -1,18 +1,10 @@
 import { Sheet } from "@mui/joy";
-import { useAppSelector } from "../hooks/hooks";
 import { TaskEl, NoTasks, Loader } from "../Copmonents";
-import { useGetTasksQuery, useQueryStateResult } from "../services/tasksApi";
+import { useGetTasksQuery } from "../services/tasksApi";
 
 export default function Landing() {
-  // const { tasks, isLoading } = useAppSelector((store) => store.tasks);
-  const {
-    data: tasks,
-    isLoading,
-    isFetching,
-    isUninitialized,
-  } = useGetTasksQuery();
+  const { data: tasks, isLoading } = useGetTasksQuery();
 
-  console.log(isLoading, isFetching, isUninitialized);
   if (isLoading) return <Loader />;
 
   const todoTasks = tasks!.filter((task) => !task.isDone);

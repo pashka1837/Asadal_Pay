@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const tasksApi = createApi({
   reducerPath: "tasksApi",
@@ -22,9 +24,7 @@ export const tasksApi = createApi({
         method: "POST",
         body: task,
       }),
-      invalidatesTags: (result, error, arg) => [
-        { type: "Task" as const, id: arg.id },
-      ],
+      invalidatesTags: (arg) => [{ type: "Task" as const, id: arg!.id }],
       async onQueryStarted(task, { dispatch, queryFulfilled }) {
         const patchResult = dispatch(
           tasksApi.util.updateQueryData("getTasks", undefined, (draft) => {

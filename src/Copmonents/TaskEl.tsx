@@ -1,8 +1,6 @@
 import { Button, Checkbox, Sheet, Stack, Typography } from "@mui/joy";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import CloseIcon from "@mui/icons-material/Close";
-import { useAppDispatch } from "../hooks/hooks";
-import { dltTask, updTask } from "../features/tasksSlice/tasksSlice";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useRef } from "react";
 import {
@@ -14,7 +12,6 @@ export default function TaskEl({ task }: { task: TaskT }) {
   const [deleteTask] = useDeleteTaskMutation();
   const [updTask] = useUpdTaskMutation();
 
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const checkBoxRef = useRef<HTMLSpanElement>(null);
@@ -27,18 +24,16 @@ export default function TaskEl({ task }: { task: TaskT }) {
 
   function handleDoneTask() {
     updTask({ ...task, isDone: !isDone });
-    // dispatch(updTask({ ...task, isDone: !isDone }));
   }
 
   const handleDeleteTask: handleClicksT = (e) => {
     e.stopPropagation();
     deleteTask(id);
-    // dispatch(dltTask(id));
   };
 
   const handleEditTask: handleClicksT = (e) => {
     e.stopPropagation();
-    navigate("edit-task", { state: { task, pathname } });
+    navigate("/edit-task", { state: { task, pathname } });
   };
 
   const handleOpenTask: handleClicksT = (e) => {
@@ -47,11 +42,12 @@ export default function TaskEl({ task }: { task: TaskT }) {
       checkBoxRef.current!.firstElementChild!.firstElementChild!
         .firstElementChild;
     if (e.target === cheBoxEl) return;
-    navigate("task", { state: { task, pathname } });
+    navigate("/task", { state: { task, pathname } });
   };
 
   return (
     <Sheet
+      data-testid="test1"
       onClick={handleOpenTask}
       color={task.isDone ? "success" : "primary"}
       variant="outlined"
@@ -71,18 +67,20 @@ export default function TaskEl({ task }: { task: TaskT }) {
           <Typography level="body-md">{date}</Typography>
           <Stack direction="row" spacing={1}>
             <Button
+              data-testid="handleEditTask"
               color={color}
               onClick={handleEditTask}
               variant="plain"
-              className="taskElBtn"
+              className="taskElBtn 1"
             >
               <MoreVertIcon />
             </Button>
             <Button
+              data-testid="handleDeleteTask"
               color={color}
               onClick={handleDeleteTask}
               variant="plain"
-              className="taskElBtn"
+              className="taskElBtn 2"
             >
               <CloseIcon />
             </Button>

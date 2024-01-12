@@ -1,4 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { EnhancedStore, configureStore } from "@reduxjs/toolkit";
 import tasksSlice from "../features/tasksSlice/tasksSlice";
 import { tasksApi } from "../services/tasksApi";
 
@@ -13,3 +13,5 @@ export const store = configureStore({
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+
+export type AppStore = EnhancedStore;
